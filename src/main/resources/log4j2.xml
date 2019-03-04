@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="ErrorFile" fileName="logs/error.log" immediateFlush="false" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <File name="BaseFile" fileName="logs/logistic_base.log" immediateFlush="false" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name= "com.epam.logistics.base.writer.MessageWriter" level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="BaseFile"/>
+        </Logger>
+
+        <Root level="fatal">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ErrorFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
