@@ -9,18 +9,19 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FreightVanQueue {
     private Queue<FreightVan> queue = new PriorityQueue<>();
-    private int currentTopPriority;
-
-    private static final int TIME = 10;
 
     private Lock workingPermission = new ReentrantLock();
+
+    private static final int TIME = 10;
 
     public void add(FreightVan freightVan) {
         workingPermission.lock();
 
-        queue.add(freightVan);
-
-        workingPermission.unlock();
+        try {
+            queue.add(freightVan);
+        } finally {
+            workingPermission.unlock();
+        }
     }
 
     public Optional<FreightVan> poll() {
@@ -29,9 +30,12 @@ public class FreightVanQueue {
         try {
             workingPermission.tryLock(TIME, TimeUnit.MILLISECONDS);
 
-            nextFreightVan = Optional.ofNullable(queue.poll());
+            try {
+                nextFreightVan = Optional.ofNullable(queue.poll());
+            } finally {
+                workingPermission.unlock();
+            }
 
-            workingPermission.unlock();
         } catch (InterruptedException e) {
             nextFreightVan = Optional.empty();
         }

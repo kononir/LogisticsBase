@@ -1,4 +1,4 @@
-package com.epam.logistics.base.writer;
+package com.epam.logistics.base.util.writer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +23,10 @@ public class MessageWriter {
     public void write(String message) {
         writePermission.lock();
 
-        LOGGER.info(message);
-
-        writePermission.unlock();
+        try {
+            LOGGER.info(message);
+        } finally {
+            writePermission.unlock();
+        }
     }
 }

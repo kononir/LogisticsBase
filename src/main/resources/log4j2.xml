@@ -15,12 +15,12 @@
     </Appenders>
 
     <Loggers>
-        <Logger name= "com.epam.logistics.base.writer.MessageWriter" level="info" additivity="true">
+        <Logger name= "com.epam.logistics.base.util.writer.MessageWriter" level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="BaseFile"/>
         </Logger>
 
-        <Root level="fatal">
+        <Root level="fatal" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="ErrorFile"/>
         </Root>

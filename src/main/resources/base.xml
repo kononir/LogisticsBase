@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.epam.com/logistics_base"
+      xsi:schemaLocation="http://www.epam.com/logistics_base logistics_base_schema.xsd">
+    <terminals-number>2</terminals-number>
+    <freight-vans>
+        <freight-van state="loaded"/>
+    </freight-vans>
+</base>
