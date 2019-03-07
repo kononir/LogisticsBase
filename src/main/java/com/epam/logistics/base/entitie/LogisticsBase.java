@@ -1,25 +1,52 @@
 package com.epam.logistics.base.entitie;
 
-import java.util.List;
+import com.epam.logistics.base.queue.FreightVanQueue;
+
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class LogisticsBase {
     private static LogisticsBase instance = new LogisticsBase();
+    private static AtomicBoolean instanceIsCreated = new AtomicBoolean(false);
 
-    private List<Terminal> terminals;
     private FreightVanQueue freightVanQueue;
 
-    public Semaphore freeTerminals;
+    private Semaphore freeTerminals;
 
     private LogisticsBase() {
     }
 
     public static LogisticsBase getInstance() {
-        return instance;
+        LogisticsBase localInstance = instance;
+
+        if (instanceIsCreated.get()) {
+
+            Lock lock = new ReentrantLock();
+
+            try {
+                lock.lock();
+
+                localInstance = instance;
+
+                if (instanceIsCreated.getAndSet(true)) {
+                    instance = localInstance = new LogisticsBase();
+                }
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        return localInstance;
     }
 
-    public void setTerminals(List<Terminal> terminals) {
-        this.terminals = terminals;
+    public Semaphore getFreeTerminals() {
+        return freeTerminals;
+    }
+
+    public FreightVanQueue getFreightVanQueue() {
+        return freightVanQueue;
     }
 
     public void setFreightVanQueue(FreightVanQueue freightVanQueue) {

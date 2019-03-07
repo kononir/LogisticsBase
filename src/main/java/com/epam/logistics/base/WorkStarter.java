@@ -1,14 +1,21 @@
 package com.epam.logistics.base;
 
+import com.epam.logistics.base.data.parser.BaseParser;
+import com.epam.logistics.base.data.parser.exception.ParsingProblemsException;
+import com.epam.logistics.base.data.parser.impl.SAXBaseParser;
 import com.epam.logistics.base.data.validator.DataValidator;
 import com.epam.logistics.base.data.validator.exception.InvalidSchemaPathException;
 import com.epam.logistics.base.data.validator.exception.ReadingProblemsException;
 import com.epam.logistics.base.data.validator.impl.DataValidatorImpl;
+import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.exception.InvalidFileException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WorkStarter {
 
@@ -27,10 +34,23 @@ public class WorkStarter {
             if (!validator.validate(path)) {
                 throw new InvalidFileException("Current file with logistic base parameters is invalid!");
             }
-        } catch (ReadingProblemsException | InvalidFileException e) {
+
+            BaseParser baseParser = new SAXBaseParser();
+            List<FreightVan> freightVans = baseParser.parse(path);
+
+            startWorking(freightVans);
+        } catch (ReadingProblemsException | InvalidFileException | ParsingProblemsException e) {
             LOGGER.error(e);
         } catch (InvalidSchemaPathException e) {
             LOGGER.fatal(e);
+        }
+    }
+
+    private static void startWorking(List<FreightVan> freightVans) {
+        ExecutorService executorService = Executors.newFixedThreadPool(freightVans.size());
+
+        for (FreightVan freightVan : freightVans) {
+            executorService.execute(freightVan);
         }
     }
 }

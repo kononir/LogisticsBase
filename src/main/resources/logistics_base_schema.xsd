@@ -6,23 +6,21 @@
     <element name="base">
         <complexType>
             <sequence>
-                <element ref="tns:terminals-number"/>
                 <element ref="tns:freight-vans"/>
             </sequence>
+
+            <attribute name="terminals-number" type="positiveInteger" use="required"/>
         </complexType>
     </element>
 
-    <element name="terminals-number" type="positiveInteger"/>
     <element name="freight-vans">
         <complexType>
             <sequence>
-                <element ref="tns:freight-van"/>
+                <element name="freight-van" type="tns:FreightVan" maxOccurs="unbounded"/>
             </sequence>
         </complexType>
     </element>
 
-    <element name="freight-van" type="tns:FreightVan"/>
-    
     <complexType name="FreightVan">
         <attribute name="state" use="required">
             <simpleType>
