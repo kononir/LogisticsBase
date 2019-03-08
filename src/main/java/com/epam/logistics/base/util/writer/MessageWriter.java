@@ -13,9 +13,6 @@ public class MessageWriter {
 
     private static final Logger LOGGER = LogManager.getLogger(MessageWriter.class);
 
-    public MessageWriter() {
-    }
-
     public static MessageWriter getInstance() {
         return instance;
     }

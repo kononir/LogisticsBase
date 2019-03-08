@@ -1,6 +1,7 @@
-package com.epam.logistics.base.queue;
+package com.epam.logistics.base.util.queue;
 
-import com.epam.logistics.base.entitie.FreightVan;
+import com.epam.logistics.base.util.generator.Generator;
+import com.epam.logistics.base.util.generator.impl.PriorityGenerator;
 
 import java.util.Optional;
 import java.util.PriorityQueue;
@@ -10,27 +11,37 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class FreightVanQueue {
-    private Queue<FreightVan> queue = new PriorityQueue<>();
+public class SynchronizedPriorityQueue<T> {
+    private Queue<QueueElement<T>> queue = new PriorityQueue<>();
+
+    private PriorityGenerator priorityGenerator;
 
     private ReadWriteLock workingPermission = new ReentrantReadWriteLock();
 
     private static final int TIME = 10;
 
-    public void add(FreightVan freightVan) {
+    public SynchronizedPriorityQueue(PriorityGenerator priorityGenerator) {
+        this.priorityGenerator = priorityGenerator;
+    }
+
+    public PriorityGenerator getPriorityGenerator() {
+        return priorityGenerator;
+    }
+
+    public void add(QueueElement<T> element) {
         Lock writePermission = workingPermission.writeLock();
 
         writePermission.lock();
 
         try {
-            queue.add(freightVan);
+            queue.add(element);
         } finally {
             writePermission.unlock();
         }
     }
 
-    public Optional<FreightVan> poll() {
-        Optional<FreightVan> nextFreightVan;
+    public Optional<QueueElement<T>> poll() {
+        Optional<QueueElement<T>> nextFreightVan;
 
         Lock writePermission = workingPermission.writeLock();
 
@@ -50,7 +61,7 @@ public class FreightVanQueue {
         return nextFreightVan;
     }
 
-    public int getFreightVansNumber() {
+    public int getSize() {
         int queueSize;
 
         Lock readPermission = workingPermission.readLock();

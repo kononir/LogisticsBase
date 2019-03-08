@@ -8,6 +8,7 @@ import com.epam.logistics.base.data.validator.exception.InvalidSchemaPathExcepti
 import com.epam.logistics.base.data.validator.exception.ReadingProblemsException;
 import com.epam.logistics.base.data.validator.impl.DataValidatorImpl;
 import com.epam.logistics.base.entitie.FreightVan;
+import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.exception.InvalidFileException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +48,9 @@ public class WorkStarter {
     }
 
     private static void startWorking(List<FreightVan> freightVans) {
-        ExecutorService executorService = Executors.newFixedThreadPool(freightVans.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(freightVans.size() + 1);
+
+        executorService.execute(LogisticsBase.getInstance());
 
         for (FreightVan freightVan : freightVans) {
             executorService.execute(freightVan);

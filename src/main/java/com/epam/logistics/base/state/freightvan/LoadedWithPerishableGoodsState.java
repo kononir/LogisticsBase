@@ -9,7 +9,6 @@ public class LoadedWithPerishableGoodsState extends FreightVanState {
 
     @Override
     public void queryTerminal() {
-        return null;
     }
 
     @Override

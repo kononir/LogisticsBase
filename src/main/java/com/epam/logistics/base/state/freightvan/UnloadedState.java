@@ -9,7 +9,6 @@ public class UnloadedState extends FreightVanState {
 
     @Override
     public void queryTerminal() {
-        return null;
     }
 
     @Override

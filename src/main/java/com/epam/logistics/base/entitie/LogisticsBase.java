@@ -1,17 +1,20 @@
 package com.epam.logistics.base.entitie;
 
-import com.epam.logistics.base.queue.FreightVanQueue;
+import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
+import com.epam.logistics.base.util.queue.QueueElement;
 
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LogisticsBase {
+public class LogisticsBase implements Runnable {
     private static LogisticsBase instance = new LogisticsBase();
     private static AtomicBoolean instanceIsCreated = new AtomicBoolean(false);
 
-    private FreightVanQueue freightVanQueue;
+    private SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue;
 
     private Semaphore freeTerminals;
 
@@ -45,15 +48,33 @@ public class LogisticsBase {
         return freeTerminals;
     }
 
-    public FreightVanQueue getFreightVanQueue() {
-        return freightVanQueue;
+    public SynchronizedPriorityQueue<FreightVan> getSynchronizedPriorityQueue() {
+        return synchronizedPriorityQueue;
     }
 
-    public void setFreightVanQueue(FreightVanQueue freightVanQueue) {
-        this.freightVanQueue = freightVanQueue;
+    public void setSynchronizedPriorityQueue(SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue) {
+        this.synchronizedPriorityQueue = synchronizedPriorityQueue;
     }
 
     public void setFreeTerminals(Semaphore freeTerminals) {
         this.freeTerminals = freeTerminals;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Optional<QueueElement<FreightVan>> optional;
+
+            while ((optional = synchronizedPriorityQueue.poll()).isPresent()) {
+                QueueElement queueElement = optional.get();
+
+                freeTerminals.acquire();
+
+                CountDownLatch queueTurn = queueElement.getQueueTurn();
+                queueTurn.countDown();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
