@@ -1,15 +1,12 @@
 package com.epam.logistics.base.state.freightvan;
 
 import com.epam.logistics.base.entitie.FreightVan;
-import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
-import com.epam.logistics.base.util.generator.impl.PriorityGenerator;
-import com.epam.logistics.base.util.generator.impl.PriorityName;
-import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import com.epam.logistics.base.entitie.LogisticsBase;
-import com.epam.logistics.base.util.queue.QueueElement;
-import com.epam.logistics.base.util.queue.exception.IncorrectThreadClosingException;
+import com.epam.logistics.base.exception.IncorrectThreadClosingException;
+import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
+import com.epam.logistics.base.util.generator.impl.PriorityName;
+import com.epam.logistics.base.util.writer.MessageWriter;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -20,23 +17,17 @@ public class LoadedState extends FreightVanState {
 
     @Override
     public void queryTerminal() throws IncorrectThreadClosingException, IllegalPriorityNameException {
+        MessageWriter messageWriter = MessageWriter.getInstance();
+        messageWriter.write("Loaded freight van #" + getFreightVan().getId() + " query terminal.");
+
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
         Semaphore freeTerminals = logisticsBase.getFreeTerminals();
 
         if (!freeTerminals.tryAcquire()) {
-            SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue = logisticsBase.getSynchronizedPriorityQueue();
-            PriorityGenerator generator = synchronizedPriorityQueue.getPriorityGenerator();
-
-            int priorityNumber = generator.generateNext(PriorityName.NORMAL);
-
-            FreightVan freightVan = getFreightVan();
-            QueueElement<FreightVan> queueElement = new QueueElement<>(priorityNumber, freightVan);
-
-            synchronizedPriorityQueue.add(queueElement);
+            messageWriter.write("Loaded freight van #" + getFreightVan().getId() + " get in queue.");
 
             try {
-                CountDownLatch queueTurn = queueElement.getQueueTurn();
-                queueTurn.await();
+                getInQueueByPriority(PriorityName.NORMAL);
             } catch (InterruptedException e) {
                 freeTerminals.release();
 
@@ -48,8 +39,11 @@ public class LoadedState extends FreightVanState {
     @Override
     public void workAtTerminal() throws IncorrectThreadClosingException {
         try {
+            MessageWriter messageWriter = MessageWriter.getInstance();
+            messageWriter.write("Loaded freight van #" + getFreightVan().getId() + " unloads.");
+
             TimeUnit seconds = TimeUnit.SECONDS;
-            seconds.sleep(60);
+            seconds.sleep(5);
 
             FreightVan freightVan = getFreightVan();
 
@@ -65,6 +59,9 @@ public class LoadedState extends FreightVanState {
 
     @Override
     public void leaveTerminal() {
+        MessageWriter messageWriter = MessageWriter.getInstance();
+        messageWriter.write("Loaded freight van #" + getFreightVan().getId() + " leave terminal.");
+
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
         Semaphore freeTerminals = logisticsBase.getFreeTerminals();
         freeTerminals.release();

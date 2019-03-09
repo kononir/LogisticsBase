@@ -1,4 +1,4 @@
-package com.epam.logistics.base.util.queue.exception;
+package com.epam.logistics.base.exception;
 
 public class IncorrectThreadClosingException extends Exception {
 

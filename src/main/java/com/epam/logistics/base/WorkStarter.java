@@ -50,10 +50,12 @@ public class WorkStarter {
     private static void startWorking(List<FreightVan> freightVans) {
         ExecutorService executorService = Executors.newFixedThreadPool(freightVans.size() + 1);
 
-        executorService.execute(LogisticsBase.getInstance());
-
         for (FreightVan freightVan : freightVans) {
             executorService.execute(freightVan);
         }
+
+        executorService.execute(LogisticsBase.getInstance());
+
+        executorService.shutdown();
     }
 }

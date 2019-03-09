@@ -1,0 +1,14 @@
+23:38:36.776 [pool-2-thread-2] INFO  BaseWriter - Loaded freight van #1 query terminal.
+23:38:36.782 [pool-2-thread-2] INFO  BaseWriter - Loaded freight van #1 unloads.
+23:38:36.783 [pool-2-thread-1] INFO  BaseWriter - Loaded freight van #0 query terminal.
+23:38:36.783 [pool-2-thread-1] INFO  BaseWriter - Loaded freight van #0 unloads.
+23:38:36.785 [pool-2-thread-3] INFO  BaseWriter - Loaded freight van #2 query terminal.
+23:38:36.785 [pool-2-thread-3] INFO  BaseWriter - Loaded freight van #2 get in queue.
+23:38:36.801 [pool-2-thread-4] INFO  BaseWriter - Loaded freight van #3 query terminal.
+23:38:36.803 [pool-2-thread-4] INFO  BaseWriter - Loaded freight van #3 get in queue.
+23:38:41.784 [pool-2-thread-1] INFO  BaseWriter - Unloaded freight van #0 leave terminal.
+23:38:41.784 [pool-2-thread-3] INFO  BaseWriter - Loaded freight van #2 unloads.
+23:38:41.784 [pool-2-thread-2] INFO  BaseWriter - Unloaded freight van #1 leave terminal.
+23:38:41.784 [pool-2-thread-4] INFO  BaseWriter - Loaded freight van #3 unloads.
+23:38:46.786 [pool-2-thread-3] INFO  BaseWriter - Unloaded freight van #2 leave terminal.
+23:38:46.786 [pool-2-thread-4] INFO  BaseWriter - Unloaded freight van #3 leave terminal.

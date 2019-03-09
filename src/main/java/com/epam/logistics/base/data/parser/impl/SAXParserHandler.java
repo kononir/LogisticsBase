@@ -3,7 +3,7 @@ package com.epam.logistics.base.data.parser.impl;
 import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.util.generator.Generator;
 import com.epam.logistics.base.util.generator.impl.IncrementalGenerator;
-import com.epam.logistics.base.util.generator.impl.PriorityGenerator;
+import com.epam.logistics.base.util.generator.impl.IncrementalPriorityGenerator;
 import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.state.freightvan.FreightVanState;
@@ -17,11 +17,12 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class SAXParserHandler extends DefaultHandler {
+    private static final int GENERATOR_INITIAL_ZERO = 0;
 
-    private List<FreightVan> freightVans;
+    private Generator<Integer> idGenerator = new IncrementalGenerator(GENERATOR_INITIAL_ZERO);
+    private List<FreightVan> freightVans = new ArrayList<>();
 
-    private static final int morePriorityGeneratorInitial = 0;
-    private int lessPriorityGeneratorInitial;
+    private int normalPriorityGeneratorInitial;
     private int terminalsNumber;
 
     public List<FreightVan> getFreightVans() {
@@ -36,15 +37,11 @@ public class SAXParserHandler extends DefaultHandler {
                 terminalsNumber = Integer.parseInt(terminalsStr);
 
                 break;
-            case "freight-vans":
-                freightVans = new ArrayList<>();
-
-                break;
             case "freight-van":
                 String initialStateName = attributes.getValue("state");
 
                 if ("loaded_with_perishable_goods".equals(initialStateName)) {
-                    lessPriorityGeneratorInitial++;
+                    normalPriorityGeneratorInitial++;
                 }
 
                 createFreightVan(initialStateName);
@@ -66,20 +63,20 @@ public class SAXParserHandler extends DefaultHandler {
         Semaphore freeTerminals = new Semaphore(terminalsNumber);
         logisticsBase.setFreeTerminals(freeTerminals);
 
-        Generator<Integer> lessPriorityGenerator = new IncrementalGenerator(lessPriorityGeneratorInitial);
-        Generator<Integer> morePriorityGenerator = new IncrementalGenerator(morePriorityGeneratorInitial);
+        Generator<Integer> lessPriorityGenerator = new IncrementalGenerator(normalPriorityGeneratorInitial);
+        Generator<Integer> morePriorityGenerator = new IncrementalGenerator(GENERATOR_INITIAL_ZERO);
 
-        PriorityGenerator priorityGenerator
-                = new PriorityGenerator(Arrays.asList(lessPriorityGenerator, morePriorityGenerator));
+        IncrementalPriorityGenerator incrementalPriorityGenerator
+                = new IncrementalPriorityGenerator(Arrays.asList(lessPriorityGenerator, morePriorityGenerator));
 
         SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue
-                = new SynchronizedPriorityQueue<>(priorityGenerator);
+                = new SynchronizedPriorityQueue<>(incrementalPriorityGenerator);
 
         logisticsBase.setSynchronizedPriorityQueue(synchronizedPriorityQueue);
     }
 
     private void createFreightVan(String initialStateName) {
-        FreightVan freightVan = new FreightVan();
+        FreightVan freightVan = new FreightVan(idGenerator.generateNext());
 
         FreightVanState initialState = new FreightVanStateCreator(freightVan).create(initialStateName);
         freightVan.setState(initialState);

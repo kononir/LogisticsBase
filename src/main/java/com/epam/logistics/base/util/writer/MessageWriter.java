@@ -11,7 +11,7 @@ public class MessageWriter {
 
     private Lock writePermission = new ReentrantLock();
 
-    private static final Logger LOGGER = LogManager.getLogger(MessageWriter.class);
+    private static final Logger LOGGER = LogManager.getLogger("BaseWriter");
 
     public static MessageWriter getInstance() {
         return instance;

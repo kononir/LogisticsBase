@@ -6,6 +6,7 @@ import com.epam.logistics.base.util.queue.QueueElement;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -65,10 +66,12 @@ public class LogisticsBase implements Runnable {
         try {
             Optional<QueueElement<FreightVan>> optional;
 
-            while ((optional = synchronizedPriorityQueue.poll()).isPresent()) {
-                QueueElement queueElement = optional.get();
+            waitFreightVans(1);
 
+            while ((optional = synchronizedPriorityQueue.poll()).isPresent()) {
                 freeTerminals.acquire();
+
+                QueueElement queueElement = optional.get();
 
                 CountDownLatch queueTurn = queueElement.getQueueTurn();
                 queueTurn.countDown();
@@ -76,5 +79,10 @@ public class LogisticsBase implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void waitFreightVans(int seconds) throws InterruptedException {
+        TimeUnit secondsUnit = TimeUnit.SECONDS;
+        secondsUnit.sleep(seconds);
     }
 }
