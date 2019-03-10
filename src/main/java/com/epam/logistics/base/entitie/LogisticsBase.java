@@ -2,6 +2,8 @@ package com.epam.logistics.base.entitie;
 
 import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import com.epam.logistics.base.util.queue.QueueElement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
@@ -18,6 +20,8 @@ public class LogisticsBase implements Runnable {
     private SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue;
 
     private Semaphore freeTerminals;
+
+    private static final Logger ERROR_LOGGER = LogManager.getRootLogger();
 
     private LogisticsBase() {
     }
@@ -66,23 +70,23 @@ public class LogisticsBase implements Runnable {
         try {
             Optional<QueueElement<FreightVan>> optional;
 
-            waitFreightVans(1);
+            waitFreightVans();
 
             while ((optional = synchronizedPriorityQueue.poll()).isPresent()) {
                 freeTerminals.acquire();
 
-                QueueElement queueElement = optional.get();
+                QueueElement<FreightVan> queueElement = optional.get();
 
                 CountDownLatch queueTurn = queueElement.getQueueTurn();
                 queueTurn.countDown();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            ERROR_LOGGER.error(e);
         }
     }
 
-    private void waitFreightVans(int seconds) throws InterruptedException {
+    private void waitFreightVans() throws InterruptedException {
         TimeUnit secondsUnit = TimeUnit.SECONDS;
-        secondsUnit.sleep(seconds);
+        secondsUnit.sleep(1);
     }
 }

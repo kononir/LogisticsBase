@@ -5,26 +5,28 @@ import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
 import com.epam.logistics.base.util.generator.impl.PriorityName;
-import com.epam.logistics.base.util.writer.MessageWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class UnloadedState extends FreightVanState {
+    private static final Logger BASE_LOGGER = LogManager.getLogger("BaseLogger");
+
     public UnloadedState(FreightVan freightVan) {
         super(freightVan);
     }
 
     @Override
     public void queryTerminal() throws IllegalPriorityNameException, IncorrectThreadClosingException {
-        MessageWriter messageWriter = MessageWriter.getInstance();
-        messageWriter.write("Unloaded freight van #" + getFreightVan().getId() + " query terminal.");
+        BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " query terminal.");
 
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
         Semaphore freeTerminals = logisticsBase.getFreeTerminals();
 
         if (!freeTerminals.tryAcquire()) {
-            messageWriter.write("Unloaded freight van #" + getFreightVan().getId() + " get in queue.");
+            BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " get in queue.");
 
             try {
                 getInQueueByPriority(PriorityName.NORMAL);
@@ -39,8 +41,7 @@ public class UnloadedState extends FreightVanState {
     @Override
     public void workAtTerminal() throws IncorrectThreadClosingException {
         try {
-            MessageWriter messageWriter = MessageWriter.getInstance();
-            messageWriter.write("Unloaded freight van #" + getFreightVan().getId() + " loads.");
+            BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " loads.");
 
             TimeUnit seconds = TimeUnit.SECONDS;
             seconds.sleep(5);
@@ -59,8 +60,7 @@ public class UnloadedState extends FreightVanState {
 
     @Override
     public void leaveTerminal() {
-        MessageWriter messageWriter = MessageWriter.getInstance();
-        messageWriter.write("Unloaded freight van #" + getFreightVan().getId() + " leave terminal.");
+        BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " leave terminal.");
 
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
         Semaphore freeTerminals = logisticsBase.getFreeTerminals();

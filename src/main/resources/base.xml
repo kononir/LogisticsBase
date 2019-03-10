@@ -8,5 +8,11 @@
         <freight-van state="loaded"/>
         <freight-van state="loaded"/>
         <freight-van state="loaded"/>
+        <freight-van state="unloaded"/>
+        <freight-van state="unloaded"/>
+        <freight-van state="loaded_with_perishable_goods"/>
+        <freight-van state="loaded_with_perishable_goods"/>
+        <freight-van state="loaded_with_perishable_goods"/>
+        <freight-van state="loaded_with_perishable_goods"/>
     </freight-vans>
 </base>
