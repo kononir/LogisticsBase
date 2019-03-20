@@ -14,12 +14,12 @@ public class IncrementalPriorityGenerator implements PriorityGenerator<Integer> 
     }
 
     @Override
-    public Integer generateNext(PriorityName priorityName) throws IllegalPriorityNameException {
-        if (priorityName == null) {
+    public Integer generateNext(Priority priority) throws IllegalPriorityNameException {
+        if (priority == null) {
             throw new IllegalPriorityNameException("Priority name is not null!");
         }
 
-        Generator<Integer> simpleGenerator = simpleGenerators.get(priorityName.getPriority());
+        Generator<Integer> simpleGenerator = simpleGenerators.get(priority.getPriority());
 
         return simpleGenerator.generateNext();
     }

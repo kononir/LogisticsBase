@@ -4,57 +4,36 @@ import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
-import com.epam.logistics.base.util.generator.impl.PriorityName;
+import com.epam.logistics.base.util.generator.impl.Priority;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-public class LoadedWithPerishableGoodsState extends LoadedState {
+public class LoadedWithPerishableGoodsState extends FreightVanState {
     private static final Logger BASE_LOGGER = LogManager.getLogger("BaseLogger");
 
-    public LoadedWithPerishableGoodsState(FreightVan freightVan) {
-        super(freightVan);
-    }
-
     @Override
-    public void queryTerminal() throws IllegalPriorityNameException, IncorrectThreadClosingException {
-        BASE_LOGGER.info("Loaded with perishable goods freight van #" + getFreightVan().getId() + " query terminal.");
+    public void queryTerminal(FreightVan freightVan)
+            throws IllegalPriorityNameException, IncorrectThreadClosingException {
+        BASE_LOGGER.info("Loaded with perishable goods freight van #" + freightVan.getId() + " get in queue.");
 
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
-        Semaphore freeTerminals = logisticsBase.getFreeTerminals();
-
-        if (!freeTerminals.tryAcquire()) {
-            BASE_LOGGER.info("Loaded with perishable goods freight van #" + getFreightVan().getId() + " get in queue.");
-
-            try {
-                getInQueueByPriority(PriorityName.PERISHABLE_GOODS);
-            } catch (InterruptedException e) {
-                freeTerminals.release();
-
-                throw new IncorrectThreadClosingException();
-            }
-        }
+        logisticsBase.getInQueueByPriority(Priority.PERISHABLE_GOODS, freightVan);
     }
 
     @Override
-    public void workAtTerminal() throws IncorrectThreadClosingException {
-        try {
-            BASE_LOGGER.info("Loaded with perishable goods freight van #" + getFreightVan().getId() + " unloads.");
+    public void workAtTerminal(FreightVan freightVan) throws IncorrectThreadClosingException {
+        BASE_LOGGER.info("Loaded with perishable goods freight van #" + freightVan.getId() + " unloads.");
 
-            TimeUnit seconds = TimeUnit.SECONDS;
-            seconds.sleep(5);
+        super.workAtTerminal(freightVan);
+    }
 
-            FreightVan freightVan = getFreightVan();
+    @Override
+    public void leaveTerminal(FreightVan freightVan) {
+        BASE_LOGGER.info("Loaded with perishable goods freight van #" + freightVan.getId() + " leave terminal.");
 
-            freightVan.setState(new UnloadedState(freightVan));
-        } catch (InterruptedException e) {
-            LogisticsBase logisticsBase = LogisticsBase.getInstance();
-            Semaphore freeTerminals = logisticsBase.getFreeTerminals();
-            freeTerminals.release();
-
-            throw new IncorrectThreadClosingException();
-        }
+        super.leaveTerminal(freightVan);
     }
 }

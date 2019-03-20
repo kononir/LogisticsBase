@@ -1,5 +1,9 @@
 package com.epam.logistics.base.entitie;
 
+import com.epam.logistics.base.exception.IncorrectThreadClosingException;
+import com.epam.logistics.base.util.generator.PriorityGenerator;
+import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
+import com.epam.logistics.base.util.generator.impl.Priority;
 import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import com.epam.logistics.base.util.queue.QueueElement;
 import org.apache.logging.log4j.LogManager;
@@ -49,10 +53,6 @@ public class LogisticsBase implements Runnable {
         return localInstance;
     }
 
-    public Semaphore getFreeTerminals() {
-        return freeTerminals;
-    }
-
     public SynchronizedPriorityQueue<FreightVan> getSynchronizedPriorityQueue() {
         return synchronizedPriorityQueue;
     }
@@ -70,8 +70,6 @@ public class LogisticsBase implements Runnable {
         try {
             Optional<QueueElement<FreightVan>> optional;
 
-            waitFreightVans();
-
             while ((optional = synchronizedPriorityQueue.poll()).isPresent()) {
                 freeTerminals.acquire();
 
@@ -85,8 +83,22 @@ public class LogisticsBase implements Runnable {
         }
     }
 
-    private void waitFreightVans() throws InterruptedException {
-        TimeUnit secondsUnit = TimeUnit.SECONDS;
-        secondsUnit.sleep(1);
+    public void releaseTerminal() {
+        freeTerminals.release();
+    }
+
+    public void getInQueueByPriority(Priority priority, FreightVan freightVan)
+            throws IllegalPriorityNameException, IncorrectThreadClosingException {
+        try {
+            PriorityGenerator<Integer> generator = synchronizedPriorityQueue.getIncrementalPriorityGenerator();
+            int priorityNumber = generator.generateNext(priority);
+            QueueElement<FreightVan> queueElement = new QueueElement<>(priorityNumber, freightVan);
+
+            synchronizedPriorityQueue.add(queueElement);
+
+            queueElement.awaitQueueTurn();
+        } catch (InterruptedException e) {
+            throw new IncorrectThreadClosingException(e);
+        }
     }
 }

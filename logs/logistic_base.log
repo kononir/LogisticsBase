@@ -1,38 +1,30 @@
-17:30:37.470 [pool-2-thread-2] INFO  BaseLogger - Loaded freight van #1 query terminal.
-17:30:37.486 [pool-2-thread-2] INFO  BaseLogger - Loaded freight van #1 unloads.
-17:30:37.486 [pool-2-thread-1] INFO  BaseLogger - Loaded freight van #0 query terminal.
-17:30:37.486 [pool-2-thread-1] INFO  BaseLogger - Loaded freight van #0 unloads.
-17:30:37.486 [pool-2-thread-3] INFO  BaseLogger - Loaded freight van #2 query terminal.
-17:30:37.486 [pool-2-thread-3] INFO  BaseLogger - Loaded freight van #2 get in queue.
-17:30:37.486 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 query terminal.
-17:30:37.486 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 get in queue.
-17:30:37.486 [pool-2-thread-7] INFO  BaseLogger - Loaded with perishable goods freight van #6 query terminal.
-17:30:37.486 [pool-2-thread-7] INFO  BaseLogger - Loaded with perishable goods freight van #6 get in queue.
-17:30:37.486 [pool-2-thread-9] INFO  BaseLogger - Loaded with perishable goods freight van #8 query terminal.
-17:30:37.486 [pool-2-thread-9] INFO  BaseLogger - Loaded with perishable goods freight van #8 get in queue.
-17:30:37.486 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 query terminal.
-17:30:37.486 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 get in queue.
-17:30:37.486 [pool-2-thread-8] INFO  BaseLogger - Loaded with perishable goods freight van #7 query terminal.
-17:30:37.486 [pool-2-thread-4] INFO  BaseLogger - Loaded freight van #3 query terminal.
-17:30:37.502 [pool-2-thread-8] INFO  BaseLogger - Loaded with perishable goods freight van #7 get in queue.
-17:30:37.502 [pool-2-thread-4] INFO  BaseLogger - Loaded freight van #3 get in queue.
-17:30:37.502 [pool-2-thread-10] INFO  BaseLogger - Loaded with perishable goods freight van #9 query terminal.
-17:30:37.502 [pool-2-thread-10] INFO  BaseLogger - Loaded with perishable goods freight van #9 get in queue.
-17:30:42.494 [pool-2-thread-2] INFO  BaseLogger - Unloaded freight van #1 leave terminal.
-17:30:42.494 [pool-2-thread-1] INFO  BaseLogger - Unloaded freight van #0 leave terminal.
-17:30:42.494 [pool-2-thread-7] INFO  BaseLogger - Loaded with perishable goods freight van #6 unloads.
-17:30:42.494 [pool-2-thread-9] INFO  BaseLogger - Loaded with perishable goods freight van #8 unloads.
-17:30:47.501 [pool-2-thread-7] INFO  BaseLogger - Unloaded freight van #6 leave terminal.
-17:30:47.501 [pool-2-thread-9] INFO  BaseLogger - Unloaded freight van #8 leave terminal.
-17:30:47.501 [pool-2-thread-8] INFO  BaseLogger - Loaded with perishable goods freight van #7 unloads.
-17:30:47.501 [pool-2-thread-10] INFO  BaseLogger - Loaded with perishable goods freight van #9 unloads.
-17:30:52.509 [pool-2-thread-10] INFO  BaseLogger - Unloaded freight van #9 leave terminal.
-17:30:52.509 [pool-2-thread-3] INFO  BaseLogger - Loaded freight van #2 unloads.
-17:30:52.509 [pool-2-thread-8] INFO  BaseLogger - Unloaded freight van #7 leave terminal.
-17:30:52.509 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 loads.
-17:30:57.517 [pool-2-thread-3] INFO  BaseLogger - Unloaded freight van #2 leave terminal.
-17:30:57.517 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 loads.
-17:30:57.517 [pool-2-thread-5] INFO  BaseLogger - Loaded freight van #4 leave terminal.
-17:30:57.517 [pool-2-thread-4] INFO  BaseLogger - Loaded freight van #3 unloads.
-17:31:02.525 [pool-2-thread-6] INFO  BaseLogger - Loaded freight van #5 leave terminal.
-17:31:02.525 [pool-2-thread-4] INFO  BaseLogger - Unloaded freight van #3 leave terminal.
+23:20:34.613 [pool-2-thread-2] INFO  BaseLogger - Loaded freight van #1 get in queue.
+23:20:34.614 [pool-2-thread-1] INFO  BaseLogger - Loaded freight van #0 get in queue.
+23:20:34.623 [pool-2-thread-4] INFO  BaseLogger - Loaded freight van #3 get in queue.
+23:20:34.624 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 get in queue.
+23:20:34.626 [pool-2-thread-8] INFO  BaseLogger - Loaded with perishable goods freight van #7 get in queue.
+23:20:34.629 [pool-2-thread-10] INFO  BaseLogger - Loaded with perishable goods freight van #9 get in queue.
+23:20:34.630 [pool-2-thread-3] INFO  BaseLogger - Loaded freight van #2 get in queue.
+23:20:34.631 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 get in queue.
+23:20:34.632 [pool-2-thread-7] INFO  BaseLogger - Loaded with perishable goods freight van #6 get in queue.
+23:20:34.633 [pool-2-thread-9] INFO  BaseLogger - Loaded with perishable goods freight van #8 get in queue.
+23:20:34.634 [pool-2-thread-8] INFO  BaseLogger - Loaded with perishable goods freight van #7 unloads.
+23:20:34.634 [pool-2-thread-10] INFO  BaseLogger - Loaded with perishable goods freight van #9 unloads.
+23:20:39.637 [pool-2-thread-8] INFO  BaseLogger - Unloaded freight van #7 leave terminal.
+23:20:39.637 [pool-2-thread-7] INFO  BaseLogger - Loaded with perishable goods freight van #6 unloads.
+23:20:39.637 [pool-2-thread-10] INFO  BaseLogger - Unloaded freight van #9 leave terminal.
+23:20:39.637 [pool-2-thread-9] INFO  BaseLogger - Loaded with perishable goods freight van #8 unloads.
+23:20:44.639 [pool-2-thread-7] INFO  BaseLogger - Unloaded freight van #6 leave terminal.
+23:20:44.639 [pool-2-thread-9] INFO  BaseLogger - Unloaded freight van #8 leave terminal.
+23:20:44.639 [pool-2-thread-1] INFO  BaseLogger - Loaded freight van #0 unloads.
+23:20:44.639 [pool-2-thread-2] INFO  BaseLogger - Loaded freight van #1 unloads.
+23:20:49.639 [pool-2-thread-2] INFO  BaseLogger - Unloaded freight van #1 leave terminal.
+23:20:49.639 [pool-2-thread-1] INFO  BaseLogger - Unloaded freight van #0 leave terminal.
+23:20:49.639 [pool-2-thread-4] INFO  BaseLogger - Loaded freight van #3 unloads.
+23:20:49.639 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 loads.
+23:20:54.639 [pool-2-thread-4] INFO  BaseLogger - Unloaded freight van #3 leave terminal.
+23:20:54.639 [pool-2-thread-6] INFO  BaseLogger - Unloaded freight van #5 leave terminal.
+23:20:54.639 [pool-2-thread-3] INFO  BaseLogger - Loaded freight van #2 unloads.
+23:20:54.639 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 loads.
+23:20:59.639 [pool-2-thread-3] INFO  BaseLogger - Unloaded freight van #2 leave terminal.
+23:20:59.639 [pool-2-thread-5] INFO  BaseLogger - Unloaded freight van #4 leave terminal.

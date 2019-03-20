@@ -22,4 +22,8 @@ public class QueueElement<T> implements Comparable<QueueElement> {
     public int compareTo(QueueElement o) {
         return priorityId - o.priorityId;
     }
+
+    public void awaitQueueTurn() throws InterruptedException {
+        queueTurn.await();
+    }
 }

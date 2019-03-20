@@ -1,4 +1,4 @@
-package com.epam.logistics.base.data.parser.exception;
+package com.epam.logistics.base.data.exception;
 
 public class ReadingProblemsException extends Exception {
 

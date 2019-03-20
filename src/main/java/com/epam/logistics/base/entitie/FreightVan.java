@@ -27,9 +27,9 @@ public class FreightVan implements Runnable {
 
     public void run() {
         try {
-            state.queryTerminal();
-            state.workAtTerminal();
-            state.leaveTerminal();
+            state.queryTerminal(this);
+            state.workAtTerminal(this);
+            state.leaveTerminal(this);
         } catch (IncorrectThreadClosingException | IllegalPriorityNameException e) {
             ERROR_LOGGER.error(e);
         }

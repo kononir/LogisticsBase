@@ -1,8 +1,8 @@
-package com.epam.logistics.base.data.parser.impl;
+package com.epam.logistics.base.data.impl;
 
-import com.epam.logistics.base.data.parser.BaseParser;
-import com.epam.logistics.base.data.parser.exception.ParsingProblemsException;
-import com.epam.logistics.base.data.validator.exception.ReadingProblemsException;
+import com.epam.logistics.base.data.BaseParser;
+import com.epam.logistics.base.data.exception.ParsingProblemsException;
+import com.epam.logistics.base.data.exception.ReadingProblemsException;
 import com.epam.logistics.base.entitie.FreightVan;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

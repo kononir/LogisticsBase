@@ -4,7 +4,7 @@ import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
-import com.epam.logistics.base.util.generator.impl.PriorityName;
+import com.epam.logistics.base.util.generator.impl.Priority;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,56 +14,25 @@ import java.util.concurrent.TimeUnit;
 public class UnloadedState extends FreightVanState {
     private static final Logger BASE_LOGGER = LogManager.getLogger("BaseLogger");
 
-    public UnloadedState(FreightVan freightVan) {
-        super(freightVan);
-    }
-
     @Override
-    public void queryTerminal() throws IllegalPriorityNameException, IncorrectThreadClosingException {
-        BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " query terminal.");
+    public void queryTerminal(FreightVan freightVan) throws IllegalPriorityNameException, IncorrectThreadClosingException {
+        BASE_LOGGER.info("Unloaded freight van #" + freightVan.getId() + " get in queue.");
 
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
-        Semaphore freeTerminals = logisticsBase.getFreeTerminals();
-
-        if (!freeTerminals.tryAcquire()) {
-            BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " get in queue.");
-
-            try {
-                getInQueueByPriority(PriorityName.NORMAL);
-            } catch (InterruptedException e) {
-                freeTerminals.release();
-
-                throw new IncorrectThreadClosingException();
-            }
-        }
+        logisticsBase.getInQueueByPriority(Priority.NORMAL, freightVan);
     }
 
     @Override
-    public void workAtTerminal() throws IncorrectThreadClosingException {
-        try {
-            BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " loads.");
+    public void workAtTerminal(FreightVan freightVan) throws IncorrectThreadClosingException {
+        BASE_LOGGER.info("Unloaded freight van #" + freightVan.getId() + " loads.");
 
-            TimeUnit seconds = TimeUnit.SECONDS;
-            seconds.sleep(5);
-
-            FreightVan freightVan = getFreightVan();
-
-            freightVan.setState(new LoadedState(freightVan));
-        } catch (InterruptedException e) {
-            LogisticsBase logisticsBase = LogisticsBase.getInstance();
-            Semaphore freeTerminals = logisticsBase.getFreeTerminals();
-            freeTerminals.release();
-
-            throw new IncorrectThreadClosingException();
-        }
+        super.workAtTerminal(freightVan);
     }
 
     @Override
-    public void leaveTerminal() {
-        BASE_LOGGER.info("Unloaded freight van #" + getFreightVan().getId() + " leave terminal.");
+    public void leaveTerminal(FreightVan freightVan) {
+        BASE_LOGGER.info("Unloaded freight van #" + freightVan.getId() + " leave terminal.");
 
-        LogisticsBase logisticsBase = LogisticsBase.getInstance();
-        Semaphore freeTerminals = logisticsBase.getFreeTerminals();
-        freeTerminals.release();
+        super.leaveTerminal(freightVan);
     }
 }

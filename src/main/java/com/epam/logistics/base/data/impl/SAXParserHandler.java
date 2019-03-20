@@ -1,4 +1,4 @@
-package com.epam.logistics.base.data.parser.impl;
+package com.epam.logistics.base.data.impl;
 
 import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.util.generator.Generator;
@@ -78,7 +78,7 @@ public class SAXParserHandler extends DefaultHandler {
     private void createFreightVan(String initialStateName) {
         FreightVan freightVan = new FreightVan(idGenerator.generateNext());
 
-        FreightVanState initialState = new FreightVanStateCreator(freightVan).create(initialStateName);
+        FreightVanState initialState = new FreightVanStateCreator().create(initialStateName);
         freightVan.setState(initialState);
 
         freightVans.add(freightVan);

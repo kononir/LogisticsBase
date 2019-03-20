@@ -1,12 +1,12 @@
 package com.epam.logistics.base.util.generator.impl;
 
-public enum PriorityName {
+public enum Priority {
     NORMAL(0),
     PERISHABLE_GOODS(1);
 
     int priority;
 
-    PriorityName(int priority) {
+    Priority(int priority) {
         this.priority = priority;
     }
 
