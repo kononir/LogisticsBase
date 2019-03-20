@@ -3,11 +3,7 @@ package com.epam.logistics.base.state.freightvan;
 import com.epam.logistics.base.entitie.FreightVan;
 import com.epam.logistics.base.entitie.LogisticsBase;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
-import com.epam.logistics.base.util.generator.PriorityGenerator;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
-import com.epam.logistics.base.util.generator.impl.Priority;
-import com.epam.logistics.base.util.queue.QueueElement;
-import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 
 import java.util.concurrent.TimeUnit;
 

@@ -8,9 +8,6 @@ import com.epam.logistics.base.util.generator.impl.Priority;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
 public class LoadedWithPerishableGoodsState extends FreightVanState {
     private static final Logger BASE_LOGGER = LogManager.getLogger("BaseLogger");
 

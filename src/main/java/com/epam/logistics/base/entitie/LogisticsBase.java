@@ -4,15 +4,14 @@ import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.PriorityGenerator;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
 import com.epam.logistics.base.util.generator.impl.Priority;
-import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import com.epam.logistics.base.util.queue.QueueElement;
+import com.epam.logistics.base.util.queue.SynchronizedPriorityQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -51,10 +50,6 @@ public class LogisticsBase implements Runnable {
         }
 
         return localInstance;
-    }
-
-    public SynchronizedPriorityQueue<FreightVan> getSynchronizedPriorityQueue() {
-        return synchronizedPriorityQueue;
     }
 
     public void setSynchronizedPriorityQueue(SynchronizedPriorityQueue<FreightVan> synchronizedPriorityQueue) {
