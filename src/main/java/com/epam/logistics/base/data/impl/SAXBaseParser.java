@@ -3,7 +3,7 @@ package com.epam.logistics.base.data.impl;
 import com.epam.logistics.base.data.BaseParser;
 import com.epam.logistics.base.data.exception.ParsingProblemsException;
 import com.epam.logistics.base.data.exception.ReadingProblemsException;
-import com.epam.logistics.base.entitie.FreightVan;
+import com.epam.logistics.base.entitie.van.FreightVan;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;

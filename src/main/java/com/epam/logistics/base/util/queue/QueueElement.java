@@ -8,7 +8,7 @@ public class QueueElement<T> implements Comparable<QueueElement> {
     private T element;
 
     private static final int DOWN_COUNT = 1;
-    private CountDownLatch queueTurn = new CountDownLatch(DOWN_COUNT);
+    private final CountDownLatch queueTurn = new CountDownLatch(DOWN_COUNT);
 
     public QueueElement(int priorityId, T element) {
         this.priorityId = priorityId;

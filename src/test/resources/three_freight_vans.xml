@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.epam.com/logistics_base"
+      xsi:schemaLocation="http://www.epam.com/logistics_base logistics_base_schema.xsd"
+      terminals-number="2">
+    <freight-vans>
+        <freight-van state="loaded"/>
+        <freight-van state="unloaded"/>
+        <freight-van state="loaded_with_perishable_goods"/>
+    </freight-vans>
+</base>

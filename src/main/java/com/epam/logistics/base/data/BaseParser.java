@@ -2,7 +2,7 @@ package com.epam.logistics.base.data;
 
 import com.epam.logistics.base.data.exception.ParsingProblemsException;
 import com.epam.logistics.base.data.exception.ReadingProblemsException;
-import com.epam.logistics.base.entitie.FreightVan;
+import com.epam.logistics.base.entitie.van.FreightVan;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.epam.logistics.base.state.freightvan;
+package com.epam.logistics.base.state.van;
 
 public class FreightVanStateCreator {
 

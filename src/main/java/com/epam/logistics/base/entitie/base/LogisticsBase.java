@@ -1,5 +1,6 @@
-package com.epam.logistics.base.entitie;
+package com.epam.logistics.base.entitie.base;
 
+import com.epam.logistics.base.entitie.van.FreightVan;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.PriorityGenerator;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;

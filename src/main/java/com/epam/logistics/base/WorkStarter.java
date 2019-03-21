@@ -4,8 +4,8 @@ import com.epam.logistics.base.data.BaseParser;
 import com.epam.logistics.base.data.exception.ParsingProblemsException;
 import com.epam.logistics.base.data.exception.ReadingProblemsException;
 import com.epam.logistics.base.data.impl.SAXBaseParser;
-import com.epam.logistics.base.entitie.FreightVan;
-import com.epam.logistics.base.entitie.LogisticsBase;
+import com.epam.logistics.base.entitie.van.FreightVan;
+import com.epam.logistics.base.entitie.base.LogisticsBase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

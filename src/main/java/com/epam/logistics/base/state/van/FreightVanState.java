@@ -1,7 +1,7 @@
-package com.epam.logistics.base.state.freightvan;
+package com.epam.logistics.base.state.van;
 
-import com.epam.logistics.base.entitie.FreightVan;
-import com.epam.logistics.base.entitie.LogisticsBase;
+import com.epam.logistics.base.entitie.van.FreightVan;
+import com.epam.logistics.base.entitie.base.LogisticsBase;
 import com.epam.logistics.base.exception.IncorrectThreadClosingException;
 import com.epam.logistics.base.util.generator.exception.IllegalPriorityNameException;
 
@@ -17,8 +17,6 @@ public abstract class FreightVanState {
         try {
             TimeUnit seconds = TimeUnit.SECONDS;
             seconds.sleep(5);
-
-            freightVan.setState(new UnloadedState());
         } catch (InterruptedException e) {
             LogisticsBase logisticsBase = LogisticsBase.getInstance();
             logisticsBase.releaseTerminal();
@@ -30,5 +28,18 @@ public abstract class FreightVanState {
     public void leaveTerminal(FreightVan freightVan) {
         LogisticsBase logisticsBase = LogisticsBase.getInstance();
         logisticsBase.releaseTerminal();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        return (this.getClass() == obj.getClass());
     }
 }
