@@ -4,13 +4,13 @@ public enum Priority {
     NORMAL(0),
     PERISHABLE_GOODS(1);
 
-    int priority;
+    int value;
 
-    Priority(int priority) {
-        this.priority = priority;
+    Priority(int value) {
+        this.value = value;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getValue() {
+        return value;
     }
 }

@@ -1,11 +1,11 @@
 package com.epam.logistics.base;
 
-import com.epam.logistics.base.data.BaseParser;
-import com.epam.logistics.base.data.exception.ParsingProblemsException;
-import com.epam.logistics.base.data.exception.ReadingProblemsException;
-import com.epam.logistics.base.data.impl.SAXBaseParser;
-import com.epam.logistics.base.entitie.van.FreightVan;
+import com.epam.logistics.base.data.parser.BaseParser;
+import com.epam.logistics.base.data.parser.exception.ParsingProblemsException;
+import com.epam.logistics.base.data.parser.exception.ReadingProblemsException;
+import com.epam.logistics.base.data.parser.impl.SAXBaseParser;
 import com.epam.logistics.base.entitie.base.LogisticsBase;
+import com.epam.logistics.base.entitie.van.FreightVan;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

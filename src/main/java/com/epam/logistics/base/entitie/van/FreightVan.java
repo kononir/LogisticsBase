@@ -27,6 +27,10 @@ public class FreightVan implements Runnable {
         this.state = state;
     }
 
+    public FreightVanState getState() {
+        return state;
+    }
+
     public void run() {
         try {
             state.queryTerminal(this);

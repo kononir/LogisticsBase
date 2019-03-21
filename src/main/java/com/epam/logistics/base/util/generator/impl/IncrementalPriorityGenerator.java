@@ -19,7 +19,7 @@ public class IncrementalPriorityGenerator implements PriorityGenerator<Integer> 
             throw new IllegalPriorityNameException("Priority name is not null!");
         }
 
-        Generator<Integer> simpleGenerator = simpleGenerators.get(priority.getPriority());
+        Generator<Integer> simpleGenerator = simpleGenerators.get(priority.getValue());
 
         return simpleGenerator.generateNext();
     }

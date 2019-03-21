@@ -1,4 +1,4 @@
-package com.epam.logistics.base.data.impl;
+package com.epam.logistics.base.data.parser.impl;
 
 import com.epam.logistics.base.entitie.van.FreightVan;
 import com.epam.logistics.base.entitie.base.LogisticsBaseBuilder;
